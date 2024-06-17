@@ -65,7 +65,7 @@ services:
       - db_root_pass
 
   https-portal:
-    image: steveltn/https-portal:1
+    image: steveltn/https-portal:1.23
     ports:
       - 80:80
       - 443:443

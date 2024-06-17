@@ -1,0 +1,94 @@
+version: '3.9'
+services:
+  wp:
+    build:
+      context: .
+      dockerfile: ./config/common/Dockerfile
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST_FILE: /run/secrets/db_host
+      WORDPRESS_DB_NAME_FILE: /run/secrets/db_name
+      WORDPRESS_DB_USER_FILE: /run/secrets/db_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_pass
+      WORDPRESS_AUTH_KEY: '${WORDPRESS_AUTH_KEY}'
+      WORDPRESS_SECURE_AUTH_KEY: '${WORDPRESS_SECURE_AUTH_KEY}'
+      WORDPRESS_LOGGED_IN_KEY: '${WORDPRESS_LOGGED_IN_KEY}'
+      WORDPRESS_NONCE_KEY: '${WORDPRESS_NONCE_KEY}'
+      WORDPRESS_AUTH_SALT: '${WORDPRESS_AUTH_SALT}'
+      WORDPRESS_SECURE_AUTH_SALT: '${WORDPRESS_SECURE_AUTH_SALT}'
+      WORDPRESS_LOGGED_IN_SALT: '${WORDPRESS_LOGGED_IN_SALT}'
+      WORDPRESS_NONCE_SALT: '${WORDPRESS_NONCE_SALT}'
+      WORDPRESS_CONFIG_EXTRA: '${WORDPRESS_CONFIG_EXTRA}'
+
+    depends_on:
+      - db
+    networks:
+      - net
+    secrets:
+      - db_host
+      - db_name
+      - db_user
+      - db_pass
+
+  db:
+    image: mysql:8.1.0
+    restart: always
+    environment:
+      MYSQL_DATABASE_FILE: /run/secrets/db_name
+      MYSQL_USER_FILE: /run/secrets/db_user
+      MYSQL_PASSWORD_FILE: /run/secrets/db_pass
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
+    networks:
+      - net
+    secrets:
+      - db_name
+      - db_user
+      - db_pass
+      - db_root_pass
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8000:80
+    environment:
+      PMA_HOST_FILE: /run/secrets/db_host
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
+      PMA_ARBITRARY: 0
+      UPLOAD_LIMIT: 100000000
+    networks:
+      - net
+    secrets:
+      - db_host
+      - db_root_pass
+
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - wp
+    networks:
+      - net
+    restart: always
+    volumes:
+      - ./https-portal-data:/var/lib/https-portal
+
+volumes:
+  db:
+networks:
+  net:
+secrets:
+  db_host:
+    file: ./secrets/wp_db_host.txt
+  db_name:
+    file: ./secrets/wp_db_name.txt
+  db_user:
+    file: ./secrets/wp_db_user.txt
+  db_pass:
+    file: ./secrets/wp_db_password.txt
+  db_root_pass:
+    file: ./secrets/wp_db_root_password.txt

@@ -189,6 +189,11 @@ add_filter( 'tiny_mce_before_init', 'afm_tinymce_add_class' );
 /**
  * Custom template tags for this theme.
  */
+require get_template_directory() . '/settings/settings.php';
+
+/**
+ * Custom template tags for this theme.
+ */
 require get_template_directory() . '/inc/template-tags.php';
 
 /**

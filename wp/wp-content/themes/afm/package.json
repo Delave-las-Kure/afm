@@ -53,5 +53,8 @@
 		"zip": "node node_scripts/zip.js afm",
 		"bundle": "run-s production zip"
 	},
-	"prettier": "@wordpress/prettier-config"
+	"prettier": "@wordpress/prettier-config",
+	"dependencies": {
+		"@wordpress/interactivity": "^6.1.0"
+	}
 }

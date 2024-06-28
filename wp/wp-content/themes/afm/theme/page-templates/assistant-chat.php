@@ -5,5 +5,5 @@
  *
  */
 get_header();
-get_template_part('template-parts/assistance/page');
+get_template_part('template-parts/assistant/page');
 get_footer();

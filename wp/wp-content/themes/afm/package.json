@@ -55,6 +55,8 @@
 	},
 	"prettier": "@wordpress/prettier-config",
 	"dependencies": {
-		"@wordpress/interactivity": "^6.1.0"
+		"@wordpress/interactivity": "^6.1.0",
+		"https-proxy-agent": "^7.0.5",
+		"openai": "^4.52.1"
 	}
 }

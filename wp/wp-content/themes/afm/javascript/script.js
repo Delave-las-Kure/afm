@@ -9,3 +9,4 @@
  * https://esbuild.github.io/
  */
 import './components/quick-questations';
+import './components/assistant-chat';

@@ -1,0 +1,10 @@
+.assistant-chat-message {
+  @apply p-4 my-3;
+
+  &--user {
+    @apply bg-red-200;
+  }
+  &--assistant {
+    @apply bg-lime-200;
+  }
+}

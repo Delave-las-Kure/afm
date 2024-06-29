@@ -1,44 +1,65 @@
 import { store, getElement, getContext } from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
+import type OpenAI from 'openai';
+import { ChatCompletionRole } from 'openai/resources/index.mjs';
 
-interface ContextProps {
-	list: any[];
-	currentMessage: string;
+export interface AssistantChatContextProps {
+	currentUserMessage: string;
 	isLoading: boolean;
 	assistant: Assistant;
+	message: OpenAI.Beta.Threads.Messages.Message;
+	list: OpenAI.Beta.Threads.Messages.Message[];
 }
 
-interface StateProps {
+export interface AssistantChatStateProps {
 	apiUrl: string;
 	assistantId: string;
 }
 
-const { state, actions } = store('AssistantChat', {
-	state: {} as StateProps,
+export const AssistantChatStore = store('AssistantChat', {
+	state: {} as AssistantChatStateProps,
 	callbacks: {
 		init() {
-			console.log(state);
-			const ctx = getContext<ContextProps>();
+			const ctx = getContext<AssistantChatContextProps>();
 			ctx.assistant = new Assistant(state.apiUrl, state.assistantId);
 		},
 	},
 	actions: {
-		setCurrentMessage(e) {
-			const ctx = getContext<ContextProps>();
-			ctx.currentMessage = e.target.value;
+		setCurrentUserMessage(e) {
+			const ctx = getContext<AssistantChatContextProps>();
+			ctx.currentUserMessage = e.target.value;
 		},
 
-		async submit(e) {
-			e.preventDefault();
-			const ctx = getContext<ContextProps>();
-			const msg = ctx.currentMessage;
+		async deleteMessage(id: string) {
+			const ctx = getContext<AssistantChatContextProps>();
+			console.log(await ctx.assistant.deleteMessage(id));
+			ctx.list = ctx.list.filter((i) => i.id != id);
+		},
 
-			ctx.currentMessage = '';
+		async submit(e: Event) {
+			e.preventDefault();
+			const ctx = getContext<AssistantChatContextProps>();
+			const msg = ctx.currentUserMessage;
+
+			ctx.currentUserMessage = '';
 			ctx.isLoading = true;
 
-			await ctx.assistant.chat(msg);
+			const message = await ctx.assistant.addMessage(msg);
+
+			ctx.list.push(message);
+
+			for await (const msg of ctx.assistant.createRun()) {
+				const ind = ctx.list.findIndex((cMsg) => cMsg.id == msg.id);
+				if (ind != -1) {
+					ctx.list.splice(ind, 1, msg);
+				} else {
+					ctx.list.push(msg);
+				}
+			}
 
 			ctx.isLoading = false;
 		},
 	},
 });
+
+const { state, actions } = AssistantChatStore;

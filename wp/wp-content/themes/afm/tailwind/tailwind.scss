@@ -26,8 +26,8 @@
  * JavaScript components or WordPress plugins.
  */
 @import "tailwindcss/components";
-@import-glob "./custom/components/**/!(components).css";
-@import "./custom/components/components.css";
+@import-glob "./custom/components/**/!(components).scss";
+@import "./custom/components/components.scss";
 
 /**
  * This injects Tailwind's utility classes and any utility classes registered

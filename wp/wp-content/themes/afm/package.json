@@ -7,6 +7,7 @@
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.7",
+		"@types/lodash": "^4.17.6",
 		"@wordpress/prettier-config": "^3.12.0",
 		"adm-zip": "^0.5.12",
 		"archiver": "^7.0.1",
@@ -26,8 +27,8 @@
 		"touch": "^3.1.0"
 	},
 	"scripts": {
-		"development:tailwind:frontend": "npx tailwindcss --postcss -i ./tailwind/tailwind.css -c ./tailwind/tailwind.config.js -o ./theme/style.css",
-		"development:tailwind:editor": "cross-env _TW_TARGET=editor npx tailwindcss --postcss -i ./tailwind/tailwind.css -c ./tailwind/tailwind.config.js -o ./theme/style-editor.css",
+		"development:tailwind:frontend": "npx tailwindcss --postcss -i ./tailwind/tailwind.scss -c ./tailwind/tailwind.config.js -o ./theme/style.css",
+		"development:tailwind:editor": "cross-env _TW_TARGET=editor npx tailwindcss --postcss -i ./tailwind/tailwind.scss -c ./tailwind/tailwind.config.js -o ./theme/style-editor.css",
 		"development:tailwind:editor:extra": "cross-env _TW_TARGET=editor npx tailwindcss --postcss -i tailwind/tailwind-editor-extra.css -c ./tailwind/tailwind.config.js -o ./theme/style-editor-extra.css",
 		"development:esbuild": "npx esbuild ./javascript/script.js ./javascript/block-editor.js --target=esnext --bundle --outdir=./theme/js --out-extension:.js=.min.js",
 		"development": "run-p \"development:**\"",
@@ -57,6 +58,7 @@
 	"dependencies": {
 		"@wordpress/interactivity": "^6.1.0",
 		"https-proxy-agent": "^7.0.5",
+		"lodash": "^4.17.21",
 		"openai": "^4.52.1"
 	}
 }

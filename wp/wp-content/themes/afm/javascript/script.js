@@ -10,3 +10,4 @@
  */
 import './components/quick-questations';
 import './components/assistant-chat';
+import './components/assistant-chat-message';

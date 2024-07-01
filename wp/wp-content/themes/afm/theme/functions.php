@@ -186,6 +186,9 @@ function afm_tinymce_add_class( $settings ) {
 }
 add_filter( 'tiny_mce_before_init', 'afm_tinymce_add_class' );
 
+
+
+require get_template_directory() . '/shared/shared.php';
 /**
  * Custom template tags for this theme.
  */
@@ -200,3 +203,18 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * user session
+ */
+require get_template_directory() . '/inc/session.php';
+
+/**
+ * user session
+ */
+require get_template_directory() . '/inc/cron/cron.php';
+
+/**
+ * Rest API
+ */
+require get_template_directory() . '/inc/rest/rest.php';

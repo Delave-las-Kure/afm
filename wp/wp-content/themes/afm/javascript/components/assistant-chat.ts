@@ -2,6 +2,7 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
 import type OpenAI from 'openai';
 import { ChatCompletionRole } from 'openai/resources/index.mjs';
+import { addAutoResizeTextarea } from '../libs/autoresize-textarea';
 
 export interface AssistantChatContextProps {
 	currentUserMessage: string;
@@ -22,6 +23,10 @@ export const AssistantChatStore = store('AssistantChat', {
 		init() {
 			const ctx = getContext<AssistantChatContextProps>();
 			ctx.assistant = new Assistant(state.apiUrl, state.assistantId);
+
+			const el = getElement();
+			const textarea = el.ref?.querySelector('textarea');
+			textarea && addAutoResizeTextarea(textarea);
 		},
 	},
 	actions: {

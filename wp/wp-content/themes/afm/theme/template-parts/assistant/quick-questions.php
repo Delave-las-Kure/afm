@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md rounded p-4" data-wp-interactive="AssistantQuickQuestions" 
-<?= wp_interactivity_data_wp_context(["list" => get_field("questions_list", "options")]); ?>>
+<?= wp_interactivity_data_wp_context(["list" => get_field("questions_list", "option")]); ?>>
   <h2 class="text-lg font-bold mb-2"><?= __("Quick Questions", "afm") ?></h2>
   <div class="flex flex-wrap">
     <template data-wp-each="context.list" data-wp-each-key="context.item.title">

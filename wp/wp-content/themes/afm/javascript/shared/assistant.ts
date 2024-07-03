@@ -26,62 +26,49 @@ export class Assistant {
 		this.assistantId = assistantId;
 		this.ai = new OpenAI({
 			dangerouslyAllowBrowser: true,
-			baseURL: this.apiUrl + '/v1/',
+			baseURL: this.apiUrl,
 			apiKey: 'not_see',
+			defaultHeaders: {
+				'X-WP-Nonce': REST_NONCE,
+			},
 		});
 	}
 
-	async createThread() {
-		const thread = await this.ai.beta.threads.create(undefined, {
-			headers: {
-				Authorization: await this.getJWT(),
-			},
-		});
+	async createThread(msg: string) {
+		const thread = await this.ai.beta.threads.create({
+			message: msg,
+		} as any);
 		this.threadId = thread.id;
 	}
 
 	async addMessage(msg: string) {
 		if (!this.threadId) {
-			await this.createThread();
+			await this.createThread(msg);
 		}
 
-		const aiMsg = await this.ai.beta.threads.messages.create(
+		const aiMsg = (await this.ai.beta.threads.messages.create(
 			this.threadId,
 			{
 				role: 'user',
 				content: msg,
-			},
-			{
-				headers: {
-					Authorization: await this.getJWT(),
-				},
 			}
-		);
+		)) as OpenAI.Beta.Threads.Messages.Message & {
+			message_count: number;
+			max_messages: number;
+		};
 
 		return aiMsg;
 	}
 
 	async deleteMessage(id: string) {
-		return this.ai.beta.threads.messages.del(this.threadId, id, {
-			headers: {
-				Authorization: await this.getJWT(),
-			},
-		});
+		return this.ai.beta.threads.messages.del(this.threadId, id);
 	}
 
 	async *createRun() {
-		this.stream = await this.ai.beta.threads.runs.create(
-			this.threadId,
-			{
-				assistant_id: this.assistantId,
-				stream: true,
-			},
-			{
-				headers: {
-					Authorization: await this.getJWT(),
-				},
-			}
-		);
+		this.stream = await this.ai.beta.threads.runs.create(this.threadId, {
+			assistant_id: this.assistantId,
+			stream: true,
+		});
 
 		let msg!: OpenAI.Beta.Threads.Messages.Message;
 
@@ -128,27 +115,5 @@ export class Assistant {
 
 			return result;
 		}
-	}
-
-	async incrementMsgCount() {
-		const res = await fetch(`${API_URL}assistant/v1/increment-msg-count/`, {
-			method: 'PUT',
-			headers: {
-				'X-WP-Nonce': REST_NONCE,
-			},
-		});
-		const data: { message_count: number; max_messages: number } =
-			await res.json();
-		return data;
-	}
-
-	async getJWT() {
-		const res = await fetch(`${API_URL}assistant/v1/jwt/`, {
-			headers: {
-				'X-WP-Nonce': REST_NONCE,
-			},
-		});
-		const data: { token: string } = await res.json();
-		return data.token;
 	}
 }

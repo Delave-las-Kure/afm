@@ -1,4 +1,4 @@
-FROM wordpress:6.5.4-php8.1-apache
+FROM wordpress:6.5.5-php8.1-apache
 # Install packages under Debian
 RUN apt-get update && \
     apt-get -y install git
@@ -16,11 +16,21 @@ RUN cd /tmp && \
     make install && \
     rm -rf /tmp/xdebug
 
+
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+
 # Since this Dockerfile extends the official Docker image `wordpress`,
 # and since `wordpress`, in turn, extends the official Docker image `php`,
 # the helper script docker-php-ext-enable (defined for image `php`)
 # works here, and we can use it to enable xdebug:
 RUN docker-php-ext-enable xdebug
+
+# Copy your custom CA certificates to the container
+COPY ./apisix/https-portal-data/assistant.local/local/signed.crt /usr/local/share/ca-certificates/assistant.local.crt
+
+# Update CA certificates
+RUN update-ca-certificates
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x wp-cli.phar && \

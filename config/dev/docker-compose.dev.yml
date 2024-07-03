@@ -24,10 +24,12 @@ services:
       - ./wp/.htaccess:/var/www/html/.htaccess
       - ./config/dev/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ./xdebug:/tmp/xdebug
+    extra_hosts:
+      - "assistant.local:host-gateway"
 
   db:
     volumes:
-      - db:/var/lib/mysql
+      - ./db:/var/lib/mysql
 
   https-portal:
     environment:

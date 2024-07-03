@@ -38,6 +38,7 @@ lerna-debug.log*
 secrets
 
 # WP
+/db
 wp/*
 !wp/wp-content
 wp/wp-content/*
@@ -49,3 +50,7 @@ wp/wp-content/themes/*
 xdebug
 https-portal-data
 .env*
+
+# APISIX
+**/apisix_conf/config.yaml
+**/dash_conf/dash.yaml

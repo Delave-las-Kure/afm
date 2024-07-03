@@ -189,6 +189,8 @@ add_filter( 'tiny_mce_before_init', 'afm_tinymce_add_class' );
 
 
 require get_template_directory() . '/shared/shared.php';
+
+require get_template_directory() . '/inc/services/services.php';
 /**
  * Custom template tags for this theme.
  */

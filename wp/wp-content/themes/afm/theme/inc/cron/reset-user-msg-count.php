@@ -11,6 +11,7 @@ function reset_daily_message_count() {
   $users = get_users($args);
   foreach ($users as $user) {
       update_field('openai_message_count', 0, 'user_' . $user->ID);
+      update_field('openai_lock_thread', false, 'user_' . $user->ID);
   }
 
   // Сбрасываем трансиенты
@@ -22,6 +23,14 @@ function reset_daily_message_count() {
           $wpdb->esc_like('_transient_openai_message_count_ip_') . '%'
       )
   );
+
+  $wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+        $wpdb->esc_like('_transient_openai_lock_thread_cookie_') . '%',
+        $wpdb->esc_like('_transient_openai_lock_thread_ip_') . '%'
+    )
+);
 }
 
 if (!wp_next_scheduled('reset_daily_message_count')) {

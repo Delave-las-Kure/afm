@@ -1,0 +1,128 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: '3.9'
+
+services:
+  apisix:
+    image: apache/apisix:3.9.1-debian
+    restart: always
+    volumes:
+      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    ##network_mode: host
+    # ports:
+    #   # - "9180:9180/tcp"
+    #   # - "9080:9080/tcp"
+    #   # - "9091:9091/tcp"
+    #   - "9443:9443/tcp"
+    #   # - "9092:9092/tcp"
+    networks:
+      apisix:
+ 
+  dashboard:
+    image: apache/apisix-dashboard:3.0.1-alpine
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./dash_conf/dash.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    depends_on:
+      - etcd
+    networks:
+      apisix:
+
+  etcd:
+    image: bitnami/etcd:3.5.11
+    restart: always
+    volumes:
+      - etcd_data:/bitnami/etcd
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    networks:
+      apisix:
+
+  https-portal:
+    image: steveltn/https-portal:1.23
+    environment:
+      DOMAINS: 'assistant.local -> http://apisix:9080'
+      STAGE: local
+    ports:
+      - 9080:80
+      - 9443:443
+    links:
+      - apisix
+    networks:
+      - apisix
+    restart: always
+    volumes:
+      - ./https-portal-data:/var/lib/https-portal
+
+  # caddy:
+  #   image: caddy:2.8.4-alpine
+  #   restart: unless-stopped
+  #   cap_add:
+  #     - NET_ADMIN
+  #   ports:
+  #     # - "8082:8082"
+  #     # - "3000:3000"
+  #     # - "80:80"
+  #     - "9443:443"
+  #     - "9443:443/udp"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - ./site:/srv
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+  #   networks:
+  #     - apisix
+
+  # prometheus:
+  #   image: prom/prometheus:v2.25.0
+  #   restart: always
+  #   volumes:
+  #     - ./prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+  #   networks:
+  #     apisix:
+
+  # grafana:
+  #   image: grafana/grafana:7.3.7
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - "./grafana_conf/provisioning:/etc/grafana/provisioning"
+  #     - "./grafana_conf/dashboards:/var/lib/grafana/dashboards"
+  #     - "./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
+  #   networks:
+  #     apisix:
+
+networks:
+  apisix:
+    driver: bridge
+
+volumes:
+  etcd_data:
+    driver: local
+  caddy_data:
+  caddy_config:

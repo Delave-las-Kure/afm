@@ -1,0 +1,3 @@
+assistant.local {
+  reverse_proxy apisix:9080
+}

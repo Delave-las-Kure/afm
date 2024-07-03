@@ -8,7 +8,6 @@ import {
 
 interface AssistantChatMessageContextProps {}
 interface AssistantChatMessageStateProps {
-	message?: OpenAI.Beta.Threads.Messages.Message;
 	messageText: string;
 	isUserMessage: boolean;
 }

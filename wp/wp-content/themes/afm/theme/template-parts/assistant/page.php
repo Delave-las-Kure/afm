@@ -1,29 +1,27 @@
-<div id="chat-app" class="max-w-lg mx-auto p-4">
-  <div>
-    <?
-    ob_start();
+<? ob_start(); ?>
+<? wp_interactivity_state('AssistantChat', [
+  "apiUrl" => get_field('api_url', 'option'),
+  "assistantId" => get_field('assistant_id', 'option'),
+  "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
+  "messageCount" => ThreadLimitService::get_message_count(),
+]); ?>
+<div id="chat-app" class="max-w-lg mx-auto p-4" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
+                                                                                      "list" => [],
+                                                                                      "isLoading" => false,
+                                                                                      "errorMsg" => ""
+                                                                                    ]); ?> data-wp-init="callbacks.init">
 
-    get_template_part('template-parts/assistant/recent-history');
-    $html = (string) ob_get_clean();
-    echo wp_interactivity_process_directives($html);
-    ?>
+  <div>
+    <? get_template_part('template-parts/assistant/recent-history'); ?>
   </div>
   <div>
-    <?
-    ob_start();
-
-    get_template_part('template-parts/assistant/chat-window');
-    $html = (string) ob_get_clean();
-    echo wp_interactivity_process_directives($html);
-    ?>
+    <? get_template_part('template-parts/assistant/chat-window'); ?>
   </div>
   <div>
-    <?
-    ob_start();
-    get_template_part('template-parts/assistant/quick-questions');
-    $html = (string) ob_get_clean();
-    echo wp_interactivity_process_directives($html);
-    ?>
+    <? get_template_part('template-parts/assistant/quick-questions'); ?>
   </div>
 
 </div>
+
+<? $html = (string) ob_get_clean();
+echo wp_interactivity_process_directives($html); ?>

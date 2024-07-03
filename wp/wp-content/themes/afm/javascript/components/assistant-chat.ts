@@ -1,38 +1,46 @@
 import { store, getElement, getContext } from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
 import type OpenAI from 'openai';
-import { ChatCompletionRole } from 'openai/resources/index.mjs';
 import { addAutoResizeTextarea } from '../libs/autoresize-textarea';
 
 export interface AssistantChatContextProps {
-	currentUserMessage: string;
 	isLoading: boolean;
 	assistant: Assistant;
-	message: OpenAI.Beta.Threads.Messages.Message;
 	list: OpenAI.Beta.Threads.Messages.Message[];
+	message: OpenAI.Beta.Threads.Message;
+	errorMsg: string;
 }
 
 export interface AssistantChatStateProps {
 	apiUrl: string;
 	assistantId: string;
+	messageLimit: number;
+	messageCount: number;
+	readonly hasError: boolean;
+	readonly isLocked: boolean;
 }
 
 export const AssistantChatStore = store('AssistantChat', {
-	state: {} as AssistantChatStateProps,
+	state: {
+		get isLocked() {
+			const { isLoading } = getContext<AssistantChatContextProps>();
+			return state.messageCount >= state.messageLimit || isLoading;
+		},
+		get hasError() {
+			return !!getContext<AssistantChatContextProps>().errorMsg;
+		},
+	} as AssistantChatStateProps,
 	callbacks: {
 		init() {
 			const ctx = getContext<AssistantChatContextProps>();
 			ctx.assistant = new Assistant(state.apiUrl, state.assistantId);
-
-			const el = getElement();
-			const textarea = el.ref?.querySelector('textarea');
-			textarea && addAutoResizeTextarea(textarea);
 		},
 	},
 	actions: {
-		setCurrentUserMessage(e) {
+		reset() {
 			const ctx = getContext<AssistantChatContextProps>();
-			ctx.currentUserMessage = e.target.value;
+			ctx.list = [];
+			ctx.assistant = new Assistant(state.apiUrl, state.assistantId);
 		},
 
 		async deleteMessage(id: string) {
@@ -41,25 +49,31 @@ export const AssistantChatStore = store('AssistantChat', {
 			ctx.list = ctx.list.filter((i) => i.id != id);
 		},
 
-		async submit(e: Event) {
-			e.preventDefault();
+		async runChat(messageText: string) {
 			const ctx = getContext<AssistantChatContextProps>();
-			const msg = ctx.currentUserMessage;
+			ctx.errorMsg = '';
 
-			ctx.currentUserMessage = '';
-			ctx.isLoading = true;
+			try {
+				ctx.isLoading = true;
 
-			const message = await ctx.assistant.addMessage(msg);
+				const message = await ctx.assistant.addMessage(messageText);
 
-			ctx.list.push(message);
+				ctx.list.push(message);
 
-			for await (const msg of ctx.assistant.createRun()) {
-				const ind = ctx.list.findIndex((cMsg) => cMsg.id == msg.id);
-				if (ind != -1) {
-					ctx.list.splice(ind, 1, msg);
-				} else {
-					ctx.list.push(msg);
+				state.messageCount = message.message_count;
+				state.messageLimit = message.max_messages;
+
+				for await (const msg of ctx.assistant.createRun()) {
+					const ind = ctx.list.findIndex((cMsg) => cMsg.id == msg.id);
+					if (ind != -1) {
+						ctx.list.splice(ind, 1, msg);
+					} else {
+						ctx.list.push(msg);
+					}
 				}
+			} catch (error) {
+				console.error(error);
+				ctx.errorMsg = error.message;
 			}
 
 			ctx.isLoading = false;

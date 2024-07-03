@@ -1,62 +1,100 @@
 <?
 add_action('rest_api_init', function () {
-  register_rest_route('assistant/v1', '/jwt/', array(
-    'methods' => 'GET',
-    'callback' => 'assistant_get_token',
-    'permission_callback' => 'nonce_permission_callback',
+  $base = 'assistant/v1';
+
+  register_rest_route($base, '/threads', array(
+    'methods' => 'POST',
+    'callback' => 'assistant_create_thread',
+    'permission_callback' => 'assistant_can_run_thread_permission_callback',
   ));
 
-  register_rest_route('assistant/v1', '/increment-msg-count/', array(
-    'methods' => 'PUT',
-    'callback' => 'assistant_increment_msg_count',
-    'permission_callback' => 'nonce_permission_callback',
+  register_rest_route($base, '/threads/(?P<post_thread_id>\d+)/messages', array(
+    'methods' => 'POST',
+    'callback' => 'assistant_create_message',
+    'permission_callback' => 'assistant_add_msg_permission_callback',
   ));
+
+  register_rest_route($base, '/threads/(?P<post_thread_id>\d+)/runs', [
+    'methods'  => 'POST',
+    'callback' => 'assistant_create_run',
+    'permission_callback' => 'assistant_can_run_thread_permission_callback',
+  ]);
 });
 
-function assistant_get_token(WP_REST_Request $request)
+function assistant_create_thread(WP_REST_Request $request)
 {
-  if (!check_message_quota()) {
-    return new WP_REST_Response(array(
-      'error' => __('Message quota exceeded.', 'afm'),
-      'error_code' => 403
-    ), 403);
-  }
+  $api_key = get_field('api_key', 'option');
 
-  // 1. Получение JWT токена
-  $jwt_url =  get_field('api_domain', 'option') . '/apisix/plugin/jwt/sign?key=' . get_field('jwt_key', 'option');
-  $response = wp_remote_get($jwt_url);
+  $body = json_decode($request->get_body());
 
-  if (is_wp_error($response)) {
-    return new WP_REST_Response(array(
-      'error' => __('Unable to authorize. Failed to get token.', 'afm'),
-      'error_code' => 500
-    ), 500);
-  }
+  $client = OpenAI::factory()->withApiKey($api_key)
+    ->withHttpHeader('OpenAI-Beta', 'assistants=v2')
+    ->make();
 
-  $jwt_token = wp_remote_retrieve_body($response);
+  $response = $client->threads()->create([]);
+
+  $thread_post_id = AssistantThreadService::create($response->id, $body->message);
+
+  return new WP_REST_Response([...$response->toArray(), 'id' => $thread_post_id]);
+}
+
+function assistant_create_message(WP_REST_Request $request)
+{
+  $body = json_decode($request->get_body(), true);
+  $post_thread_id = $request->get_param("post_thread_id");
+  $thread_id = AssistantThreadService::get_thread_id($post_thread_id);
+
+
+  $api_key = get_field('api_key', 'option');
+  $client = OpenAI::factory()->withApiKey($api_key)
+    ->withHttpHeader('OpenAI-Beta', 'assistants=v2')
+    ->make();
+
+  $api_key = get_field('api_key', 'option');
+
+
+  $response = $client->threads()->messages()->create($thread_id, $body);
+  ThreadLimitService::increment_message_count();
+
 
   return new WP_REST_Response(array(
-    'token' => $jwt_token,
+    ...$response->toArray(),
+    'message_count' => min(ThreadLimitService::get_message_count(), max(ThreadLimitService::get_assistant_message_limit(), 0)),
+    'max_messages' =>  ThreadLimitService::get_assistant_message_limit(),
   ));
 }
 
-function assistant_increment_msg_count(WP_REST_Request $request)
+function assistant_create_run(WP_REST_Request $request)
 {
-  if (!check_message_quota()) {
-    return new WP_REST_Response(array(
-      'error' => __('Message quota exceeded.', 'afm'),
-      'error_code' => 403
-    ), 403);
+  $api_key = get_field('api_key', 'option'); // Получаем ключ API из настроек
+  $post_thread_id = $request->get_param("post_thread_id");
+  $thread_id = AssistantThreadService::get_thread_id($post_thread_id);
+  // Считываем тело запроса
+  $request_body = json_decode($request->get_body(), true);
+
+  $client = OpenAI::factory()->withApiKey($api_key)
+    ->withHttpHeader('OpenAI-Beta', 'assistants=v2')
+    ->make();
+
+  if (!ThreadLimitService::can_add_message())
+    ThreadLimitService::lock_thread();
+  // Устанавливаем хедеры, тело запроса и параметры для потокового подключения
+
+  // Выводим headers для клиентского сервиса, чтобы понимать, что происходит стриминг
+  header('Content-Type: text/event-stream');
+  header('Cache-Control: no-cache');
+  header('Connection: keep-alive');
+
+  $stream = $client->threads()->runs()->createStreamed(
+    threadId: $thread_id,
+    parameters: $request_body,
+  );
+
+  foreach ($stream as $response) {
+    echo "data: " . json_encode(["event" => $response->event, "data" => $response->response]) . "\n\n"; // ThreadResponse | ThreadRunResponse | ThreadRunStepResponse | ThreadRunStepDeltaResponse | ThreadMessageResponse | ThreadMessageDeltaResponse
+    flush();
   }
+  echo "data: [DONE]\n\n";
 
-  increment_message_count();
-
-  // Получаем текущее значение счетчика и максимальное количество сообщений
-  $message_count = get_message_count();
-  $max_messages = get_assistant_message_limit();
-
-  return new WP_REST_Response(array(
-    'message_count' => $message_count,
-    'max_messages' => $max_messages,
-  ));
+  die();
 }

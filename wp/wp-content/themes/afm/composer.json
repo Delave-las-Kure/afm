@@ -16,7 +16,12 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"php-http/discovery": true
 		}
+	},
+	"require": {
+		"guzzlehttp/guzzle": "^7.8",
+		"openai-php/client": "^0.10.1"
 	}
 }

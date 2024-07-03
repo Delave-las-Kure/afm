@@ -1,19 +1,39 @@
 <? ob_start(); ?>
-<? wp_interactivity_state('AssistantChat', [
+<?
+$assistant_thread_id = $args['assistant_thread_id'] ?? null;
+$list = [];
+
+if ($assistant_thread_id) {
+  try {
+    $rawData = AiService::get_thread_messages(AssistantThreadService::get_thread_id($assistant_thread_id));
+    if ($rawData && property_exists($rawData, 'data'))
+      $list = array_reverse($rawData->data);
+  } catch (\Throwable $th) {
+  }
+}
+
+wp_interactivity_state('AssistantChat', [
   "apiUrl" => get_field('api_url', 'option'),
   "assistantId" => get_field('assistant_id', 'option'),
   "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
   "messageCount" => ThreadLimitService::get_message_count(),
 ]); ?>
 <div id="chat-app" class="max-w-lg mx-auto p-4" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
-                                                                                      "list" => [],
+                                                                                      "list" => $list,
                                                                                       "isLoading" => false,
                                                                                       "errorMsg" => ""
                                                                                     ]); ?> data-wp-init="callbacks.init">
 
+
   <div>
-    <? get_template_part('template-parts/assistant/recent-history'); ?>
+    <? $user_id = get_current_user_id();
+    if ($user_id) {
+      get_template_part('template-parts/assistant/recent-history', null, [
+        'user_id' => $user_id
+      ]);
+    } ?>
   </div>
+
   <div>
     <? get_template_part('template-parts/assistant/chat-window'); ?>
   </div>

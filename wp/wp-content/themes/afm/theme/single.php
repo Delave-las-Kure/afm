@@ -9,35 +9,13 @@
 
 get_header();
 ?>
-
-	<section id="primary">
-		<main id="main">
-
+	<section id="primary" class="px-content py-10 sm:py-32 grow flex flex-col">
+		<main id="main" class="max-w-content mx-auto w-full">
 			<?php
 			/* Start the Loop */
 			while ( have_posts() ) :
 				the_post();
 				get_template_part( 'template-parts/content/content', 'single' );
-
-				if ( is_singular( 'post' ) ) {
-					// Previous/next post navigation.
-					the_post_navigation(
-						array(
-							'next_text' => '<span aria-hidden="true">' . __( 'Next Post', 'afm' ) . '</span> ' .
-								'<span class="sr-only">' . __( 'Next post:', 'afm' ) . '</span> <br/>' .
-								'<span>%title</span>',
-							'prev_text' => '<span aria-hidden="true">' . __( 'Previous Post', 'afm' ) . '</span> ' .
-								'<span class="sr-only">' . __( 'Previous post:', 'afm' ) . '</span> <br/>' .
-								'<span>%title</span>',
-						)
-					);
-				}
-
-				// If comments are open, or we have at least one comment, load
-				// the comment template.
-				if ( comments_open() || get_comments_number() ) {
-					comments_template();
-				}
 
 				// End the loop.
 			endwhile;

@@ -1,0 +1,38 @@
+.afm-icon-button {
+	@apply inline-flex items-center justify-center content-center no-underline transition-all;
+
+  &--rounded {
+    @apply rounded-full;
+  }
+
+	&--size {
+		&_md {
+			@apply size-10 text-body-md;
+		}
+	}
+
+ 
+	&--color {
+    @each $colorName in $colorNames {
+      &_#{$colorName} {
+        @extend %color-#{$colorName};
+      }
+    }
+	}
+
+	&--variant {
+		&_contained {
+      @each $colorName in $colorNames {
+        &%color-#{$colorName} {
+          background-color: theme("colors.#{$colorName}-container.DEFAULT");
+          color: theme("colors.on-#{$colorName}-container.DEFAULT");
+          &:hover {
+            background-color: theme("colors.#{$colorName}-container.low");
+          }
+        }
+      }
+		}
+		&_outlined {
+		}
+	}
+}

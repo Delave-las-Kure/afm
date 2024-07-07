@@ -32,7 +32,7 @@ const AssistantChatMessageStore = store('AssistantChatMessage', {
 		get isUserMessage() {
 			const ctx = getContext<AssistantChatContextProps>('AssistantChat');
 			const msg = ctx.list.find((el) => el.id == ctx.message.id);
-
+			console.log(msg?.role == 'user');
 			return msg?.role == 'user';
 		},
 	},

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template part for displaying the header content
  *
@@ -9,39 +10,62 @@
 
 ?>
 
-<header id="masthead">
+<header id="masthead" class="py-4 md:py-5 px-content shadow">
 
-	<div>
-		<?php
-		if ( is_front_page() ) :
-			?>
-			<h1><?php bloginfo( 'name' ); ?></h1>
-			<?php
-		else :
-			?>
-			<p><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-			<?php
-		endif;
+	<div class="w-full mx-auto max-w-content flex justify-between">
+		<div class="flex items-center justify-between gap-x-5 sm:gap-x-10">
+			<div>
+				<?php
+				$site_name = esc_attr(get_bloginfo('name'));
+				$custom_logo_id = get_theme_mod('custom_logo');
 
-		$afm_description = get_bloginfo( 'description', 'display' );
-		if ( $afm_description || is_customize_preview() ) :
-			?>
-			<p><?php echo $afm_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-		<?php endif; ?>
+				if (has_custom_logo()) { ?>
+					<a href="<?= esc_url(home_url('/')) ?>" class="" title="<?= $site_name ?>">
+						<?= wp_get_attachment_image($custom_logo_id, [0, 48], false, array("alt" => $site_name, 'class' => '')) ?>
+					</a>
+				<? } else { ?>
+					<a href="<?= esc_url(home_url('/')) ?>" title="<?= esc_attr(get_bloginfo('name')) ?>" class="">
+						<?= esc_html(get_bloginfo('name')) ?>
+					</a>
+				<? } ?>
+			</div>
+
+			<nav id="site-navigation" class="header__menu" aria-label="<?php esc_attr_e('Main Navigation', 'afm'); ?>">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'menu-1',
+						'menu_id'        => 'primary-menu',
+						'items_wrap'     => '<ul id="%1$s" class="%2$s" aria-label="submenu">%3$s</ul>',
+					)
+				);
+				?>
+			</nav><!-- #site-navigation -->
+		</div>
+		<div class="flex items-center gap-x-3">
+			<? if (is_user_logged_in()) { ?>
+				<? get_template_part('template-parts/atoms/icon-button', null, [
+					"href" => get_permalink(UM()->options()->get('core_account')),
+					"icon" => 'person',
+					"color" => "primary",
+					"rounded" => true
+				]) ?>
+				<? get_template_part('template-parts/atoms/icon-button', null, [
+					"href" => get_permalink(UM()->options()->get('core_logout')),
+					"icon" => 'logout',
+					"color" => "error",
+					"rounded" => true
+				]) ?>
+			<? } else { ?>
+				<? get_template_part('template-parts/atoms/icon-button', null, [
+					"href" => get_permalink(UM()->options()->get('core_login')),
+					"icon" => 'login',
+					"color" => "primary",
+					"rounded" => true
+				]) ?>
+			<? } ?>
+		</div>
 	</div>
 
-	<nav id="site-navigation" aria-label="<?php esc_attr_e( 'Main Navigation', 'afm' ); ?>">
-		<button aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'afm' ); ?></button>
-
-		<?php
-		wp_nav_menu(
-			array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
-				'items_wrap'     => '<ul id="%1$s" class="%2$s" aria-label="submenu">%3$s</ul>',
-			)
-		);
-		?>
-	</nav><!-- #site-navigation -->
 
 </header><!-- #masthead -->

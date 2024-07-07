@@ -1,0 +1,19 @@
+.um-form {
+	&:has(input[value="delete"]) {
+		.um-field-password {
+			display: none;
+		}
+	}
+}
+
+.um.um {
+	a.um-button,
+	a.um-button.um-disabled:active,
+	a.um-button.um-disabled:focus,
+	a.um-button.um-disabled:hover,
+	input[type="submit"].um-button,
+	input[type="submit"].um-button:focus {
+		@extend .afm-button, .afm-button--variant_outlined;
+		@apply bg-primary hover:bg-primary-tint text-on-primary hover:text-on-primary;
+	}
+}

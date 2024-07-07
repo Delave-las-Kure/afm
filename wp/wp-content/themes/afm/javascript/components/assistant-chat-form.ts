@@ -42,6 +42,16 @@ export const AssistantChatFormStore = store('AssistantChatForm', {
 				store<typeof AssistantChatStore>('AssistantChat');
 			return assistantChatStore.state.hasError;
 		},
+		get errorMsg() {
+			const assistantChatCtx =
+				getContext<AssistantChatContextProps>('AssistantChat');
+			return assistantChatCtx.errorMsg;
+		},
+		get isLoading() {
+			const assistantChatCtx =
+				getContext<AssistantChatContextProps>('AssistantChat');
+			return assistantChatCtx.isLoading;
+		},
 	} as AssistantChatFormStateProps,
 	callbacks: {
 		init() {

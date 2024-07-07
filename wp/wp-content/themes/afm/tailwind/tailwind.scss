@@ -1,4 +1,8 @@
-@import "./custom/file-header.css";
+@import-glob "./custom/mixins/**/!(mixins).scss";
+
+@import "./custom/abstracts/colors.scss";
+
+@import "./custom/file-header.scss";
 /**
  * The line above injects the WordPress file header. It needs to be first,
  * before this comment.
@@ -7,14 +11,14 @@
 /**
  * This injects custom `@font-face` rules.
  */
-@import "./custom/fonts.css";
+@import "./custom/fonts.scss";
 
 /**
  * This injects Tailwind's base styles and any base styles registered by
  * plugins, then adds custom base styles.
  */
 @import "tailwindcss/base";
-@import "./custom/base.css";
+@import "./custom/base/index.scss";
 
 /**
  * This injects Tailwind's component classes and any component classes
@@ -27,11 +31,10 @@
  */
 @import "tailwindcss/components";
 @import-glob "./custom/components/**/!(components).scss";
-@import "./custom/components/components.scss";
-
+@import-glob "./custom/themes/**/!(themes).scss";
 /**
  * This injects Tailwind's utility classes and any utility classes registered
  * by plugins, then adds custom utility classes.
  */
 @import "tailwindcss/utilities";
-@import "./custom/utilities.css";
+@import "./custom/utilities.scss";

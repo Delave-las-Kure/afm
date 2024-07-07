@@ -11,6 +11,6 @@
  * `theme.json` file and is applied both to the frontend and in the block
  * editor.
 */
-body {
-	@apply bg-background text-foreground font-sans;
-}
+
+@import "./variables.scss";
+@import "./std.scss";

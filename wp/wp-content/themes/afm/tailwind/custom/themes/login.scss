@@ -1,0 +1,26 @@
+form.ajax-auth {
+  @apply shadow-lg border border-surface-outline-low;
+  .lh1 {
+    @apply mt-0 text-display-xs text-on-surface-low;
+  }
+  .accept_terms_and_conditions {
+    @apply flex gap-x-1 items-baseline text-body-xs;
+  }
+
+  button {
+    @extend .afm-button, .afm-button--variant_outlined;
+    @apply bg-primary hover:bg-primary-tint text-on-primary hover:text-on-primary;
+  }
+
+  input[type=tel], input[type=text] {
+    @apply h-10 #{!important};
+  }
+
+  input[type=text] {
+    @apply px-3;
+  }
+
+  .iti__selected-flag {
+    padding: 0 6px 0 4px;
+  }
+}

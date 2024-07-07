@@ -2,38 +2,518 @@
 	"$schema": "https://schemas.wp.org/trunk/theme.json",
 	"version": 3,
 	"settings": {
+		"appearanceTools": true,
 		"color": {
+			"mainColorGroup": "primary",
 			"palette": [
 				{
-					"slug": "background",
-					"color": "#ffffff",
-					"name": "Background"
+					"name": "Gray 25",
+					"slug": "gray-25",
+					"color": "#FCFCFD",
+					"group": "gray"
 				},
 				{
-					"slug": "foreground",
-					"color": "#404040",
-					"name": "Foreground"
+					"name": "Gray 50",
+					"slug": "gray-50",
+					"color": "#F9FAFB",
+					"group": "gray"
 				},
 				{
-					"slug": "primary",
-					"color": "#b91c1c",
-					"name": "Primary"
+					"name": "Gray 100",
+					"slug": "gray-100",
+					"color": "#F2F4F7",
+					"group": "gray"
 				},
 				{
-					"slug": "secondary",
-					"color": "#15803d",
-					"name": "Secondary"
+					"name": "Gray 200",
+					"slug": "gray-200",
+					"color": "#E4E7EC",
+					"group": "gray"
 				},
 				{
-					"slug": "tertiary",
-					"color": "#0369a1",
-					"name": "Tertiary"
+					"name": "Gray 300",
+					"slug": "gray-300",
+					"color": "#D0D5DD",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 400",
+					"slug": "gray-400",
+					"color": "#98A2B3",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 500",
+					"slug": "gray-500",
+					"color": "#667085",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 600",
+					"slug": "gray-600",
+					"color": "#475467",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 700",
+					"slug": "gray-700",
+					"color": "#344054",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 800",
+					"slug": "gray-800",
+					"color": "#1D2939",
+					"group": "gray"
+				},
+				{
+					"name": "Gray 900",
+					"slug": "gray-900",
+					"color": "#101828",
+					"group": "gray"
+				},
+				{
+					"name": "Primary 25",
+					"slug": "primary-25",
+					"color": "#E9F6FF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 50",
+					"slug": "primary-50",
+					"color": "#D2EBFF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 100",
+					"slug": "primary-100",
+					"color": "#A5D7FF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 200",
+					"slug": "primary-200",
+					"color": "#70BFFF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 300",
+					"slug": "primary-300",
+					"color": "#3FA7FF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 400",
+					"slug": "primary-400",
+					"color": "#0B8FFF",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 500",
+					"slug": "primary-500",
+					"color": "#0077e6",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 600",
+					"slug": "primary-600",
+					"color": "#0066cb",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 700",
+					"slug": "primary-700",
+					"color": "#0055b1",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 800",
+					"slug": "primary-800",
+					"color": "#004497",
+					"group": "primary"
+				},
+				{
+					"name": "Primary 900",
+					"slug": "primary-900",
+					"color": "#00337e",
+					"group": "primary"
+				},
+				{
+					"name": "Error 25",
+					"slug": "error-25",
+					"color": "#FFFBFA"
+				},
+				{
+					"name": "Error 50",
+					"slug": "error-50",
+					"color": "#FEF3F2",
+					"group": "error"
+				},
+				{
+					"name": "Error 100",
+					"slug": "error-100",
+					"color": "#FEE4E2",
+					"group": "error"
+				},
+				{
+					"name": "Error 200",
+					"slug": "error-200",
+					"color": "#FECDCA",
+					"group": "error"
+				},
+				{
+					"name": "Error 300",
+					"slug": "error-300",
+					"color": "#FDA29B",
+					"group": "error"
+				},
+				{
+					"name": "Error 400",
+					"slug": "error-400",
+					"color": "#F97066",
+					"group": "error"
+				},
+				{
+					"name": "Error 500",
+					"slug": "error-500",
+					"color": "#F04438",
+					"group": "error"
+				},
+				{
+					"name": "Error 600",
+					"slug": "error-600",
+					"color": "#D92D20",
+					"group": "error"
+				},
+				{
+					"name": "Error 700",
+					"slug": "error-700",
+					"color": "#B42318",
+					"group": "error"
+				},
+				{
+					"name": "Error 800",
+					"slug": "error-800",
+					"color": "#912018",
+					"group": "error"
+				},
+				{
+					"name": "Error 900",
+					"slug": "error-900",
+					"color": "#7A271A",
+					"group": "error"
+				},
+				{
+					"name": "Warning 25",
+					"slug": "warning-25",
+					"color": "#FFFCF5",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 50",
+					"slug": "warning-50",
+					"color": "#FFFAEB",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 100",
+					"slug": "warning-100",
+					"color": "#FEF0C7",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 200",
+					"slug": "warning-200",
+					"color": "#FEDF89",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 300",
+					"slug": "warning-300",
+					"color": "#FEC84B",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 400",
+					"slug": "warning-400",
+					"color": "#FDB022",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 500",
+					"slug": "warning-500",
+					"color": "#F79009",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 600",
+					"slug": "warning-600",
+					"color": "#DC6803",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 700",
+					"slug": "warning-700",
+					"color": "#B54708",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 800",
+					"slug": "warning-800",
+					"color": "#93370D",
+					"group": "warning"
+				},
+				{
+					"name": "Warning 900",
+					"slug": "warning-900",
+					"color": "#7A2E0E",
+					"group": "warning"
+				},
+				{
+					"name": "Success 25",
+					"slug": "success-25",
+					"color": "#F6FEF9",
+					"group": "success"
+				},
+				{
+					"name": "Success 50",
+					"slug": "success-50",
+					"color": "#ECFDF3",
+					"group": "success"
+				},
+				{
+					"name": "Success 100",
+					"slug": "success-100",
+					"color": "#D1FADF",
+					"group": "success"
+				},
+				{
+					"name": "Success 200",
+					"slug": "success-200",
+					"color": "#A6F4C5",
+					"group": "success"
+				},
+				{
+					"name": "Success 300",
+					"slug": "success-300",
+					"color": "#6CE9A6",
+					"group": "success"
+				},
+				{
+					"name": "Success 400",
+					"slug": "success-400",
+					"color": "#32D583",
+					"group": "success"
+				},
+				{
+					"name": "Success 500",
+					"slug": "success-500",
+					"color": "#12B76A",
+					"group": "success"
+				},
+				{
+					"name": "Success 600",
+					"slug": "success-600",
+					"color": "#039855",
+					"group": "success"
+				},
+				{
+					"name": "Success 700",
+					"slug": "success-700",
+					"color": "#027A48",
+					"group": "success"
+				},
+				{
+					"name": "Success 800",
+					"slug": "success-800",
+					"color": "#05603A",
+					"group": "success"
+				},
+				{
+					"name": "Success 900",
+					"slug": "success-900",
+					"color": "#054F31",
+					"group": "success"
+				}
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"fontFamilies": [
+				{
+					"slug": "nunito-sans",
+					"name": "Nunito Sans",
+					"fontFamily": "\"Nunito Sans\", sans-serif"
+				}
+			],
+			"fontSizes": [
+				{
+					"name": "Display 2xl",
+					"slug": "display-2xl",
+					"size": "4.5rem"
+				},
+				{
+					"name": "Display xl",
+					"slug": "display-xl",
+					"size": "3.75rem"
+				},
+				{
+					"name": "Display lg",
+					"slug": "display-lg",
+					"size": "3rem"
+				},
+				{
+					"name": "Display md",
+					"slug": "display-md",
+					"size": "2.25rem"
+				},
+				{
+					"name": "Display sm",
+					"slug": "display-sm",
+					"size": "1.875rem"
+				},
+				{
+					"name": "Display xs",
+					"slug": "display-xs",
+					"size": "1.5rem"
+				},
+				{
+					"name": "Text xl",
+					"slug": "body-xl",
+					"size": "1.25rem"
+				},
+				{
+					"name": "Text lg",
+					"slug": "body-lg",
+					"size": "1.125rem"
+				},
+				{
+					"name": "Text md",
+					"slug": "body-md",
+					"size": "1rem"
+				},
+				{
+					"name": "Text sm",
+					"slug": "body-sm",
+					"size": "0.875rem"
+				},
+				{
+					"name": "Text xs",
+					"slug": "body-xs",
+					"size": "0.75rem"
+				},
+				{
+					"name": "Caption md",
+					"slug": "caption-md",
+					"size": "0.625rem"
+				}
+			],
+			"fontFamilies": [
+				{
+					"name": "Base",
+					"slug": "base",
+					"fontFamily": "Nunito Sans, sans-serif"
+				}
+			]
+		},
+		"spacing": {
+			"spacingScale": {
+				"operator": "+",
+				"increment": 4,
+				"steps": 64,
+				"mediumStep": 4,
+				"unit": "px"
+			},
+			"spacingSizes": [
+				{
+					"size": "2px",
+					"slug": "45",
+					"name": "2px"
+				},
+				{
+					"size": "6px",
+					"slug": "55",
+					"name": "6px"
+				},
+				{
+					"size": "10px",
+					"slug": "65",
+					"name": "10px"
+				},
+				{
+					"size": "14px",
+					"slug": "75",
+					"name": "14px"
+				},
+				{
+					"size": "18px",
+					"slug": "85",
+					"name": "18px"
+				},
+				{
+					"size": "26px",
+					"slug": "105",
+					"name": "26px"
+				},
+				{
+					"size": "30px",
+					"slug": "115",
+					"name": "30px"
+				},
+				{
+					"size": "46px",
+					"slug": "155",
+					"name": "46px"
+				},
+				{
+					"size": "54px",
+					"slug": "175",
+					"name": "54px"
+				},
+
+				{
+					"size": "58px",
+					"slug": "185",
+					"name": "58px"
 				}
 			]
 		},
 		"layout": {
-			"contentSize": "40rem",
-			"wideSize": "60rem"
+			"contentSize": "calc(1280px - 2 * var(--layout--content-padding))",
+			"wideSize": "100%"
+		},
+		"custom": {
+			"layout": {
+				"contentSpacingSm": "var(--wp--preset--spacing--80)",
+				"contentSpacingMd": "var(--wp--preset--spacing--120)",
+				"contentPaddingSm": "var(--wp--preset--spacing--80)",
+				"contentPaddingMd": "var(--wp--preset--spacing--120)"
+			},
+			"lineHeight": {
+				"display-2xl": "5.625rem",
+				"display-xl": "4.5rem",
+				"display-lg": "3.75rem",
+				"display-md": "2.75rem",
+				"display-sm": "2.375rem",
+				"display-xs": "2rem",
+				"body-xl": "1.875rem",
+				"body-lg": "1.75rem",
+				"body-md": "1.5rem",
+				"body-sm": "1.25rem",
+				"body-xs": "1.125rem",
+				"caption-md": "1rem"
+			},
+			"letterSpacing": {
+				"display-2xl": "-0.02em",
+				"display-xl": "-0.02em",
+				"display-lg": "-0.02em",
+				"display-md": "-0.02em"
+			}
+		}
+	},
+	"styles": {
+		"spacing": {
+			"blockGap": "20px"
 		}
 	}
 }

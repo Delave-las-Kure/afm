@@ -1,0 +1,95 @@
+$globalSelector: 'body' !default;
+$proseCustomSelector: null !default;
+
+#{$globalSelector} {
+  font-family: var(--wp--preset--font-family--base);
+  --lb-ui-color-text: theme(colors.on-surface.DEFAULT);
+  --lb-ui-color-heading-text: theme(colors.on-surface.highest);
+  --lb-ui-color-link-text: theme(colors.primary.DEFAULT);
+}
+
+@include make-prose('headings', 'h1', $proseCustomSelector) {
+  @apply text-display-md font-semibold;
+}
+
+@include make-prose('headings', 'h2', $proseCustomSelector) {
+  @apply text-display-sm font-semibold;
+}
+
+@include make-prose('headings', 'h3', $proseCustomSelector) {
+  @apply text-display-xs font-semibold;
+}
+
+@include make-prose('content', 'p', $proseCustomSelector) {
+  @apply text-body-md;
+}
+
+@include make-prose('content', 'ul, ol', $proseCustomSelector) {
+  @apply text-body-md flex flex-col gap-y-2 pl-0;
+}
+
+@include make-prose('content', 'img', $proseCustomSelector) {
+  @apply w-full;
+}
+
+@include make-prose(
+  'spaces',
+  'h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote,.wp-block-image,.wp-block-columns,.lb-group-list,.lb-review-details,.lb-review-list,.lb-author-block,[id*="sp_easy_accordion"],.lb-step-list,.wp-block-casino-card,.wp-block-bonus-card',
+  $proseCustomSelector
+) {
+  &:first-child {
+    margin-block-start: 0;
+  }
+  &:last-child {
+    margin-block-end: 0;
+  }
+}
+
+@include make-prose(
+  'spaces',
+  '.wp-block-columns,.lb-group-list',
+  $proseCustomSelector
+) {
+  @apply my-6;
+}
+
+@include make-prose('spaces', 'h1', $proseCustomSelector) {
+  @apply mt-12 mb-8;
+}
+
+@include make-prose('spaces', 'h2', $proseCustomSelector) {
+  @apply mt-12 mb-6;
+}
+
+@include make-prose('spaces', 'h3', $proseCustomSelector) {
+  @apply mt-10 sm:mt-12 mb-4;
+}
+
+@include make-prose('spaces', 'p,.wp-block-image', $proseCustomSelector) {
+  @apply my-4;
+}
+
+@include make-prose('spaces', 'ul,ol', $proseCustomSelector) {
+  @apply my-5;
+}
+
+@include make-prose('spaces', 'blockquote', $proseCustomSelector) {
+  @apply my-6;
+}
+
+@include make-prose('spaces', '.afm-post-info', $proseCustomSelector) {
+  @apply my-6;
+}
+
+@include make-prose('colors', 'h1, h2, h3, h4, h5, h6', $proseCustomSelector) {
+  color: var(--lb-ui-color-heading-text);
+}
+
+@include make-prose('colors', 'a', $proseCustomSelector) {
+  color: var(--lb-ui-color-link-text);
+}
+
+@include make-prose('colors', 'p, ul, ol', $proseCustomSelector) {
+  color: var(--lb-ui-color-text);
+}
+

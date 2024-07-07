@@ -18,14 +18,17 @@ wp_interactivity_state('AssistantChat', [
   "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
   "messageCount" => ThreadLimitService::get_message_count(),
 ]); ?>
-<div id="chat-app" class="max-w-lg mx-auto p-4" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
-                                                                                      "list" => $list,
-                                                                                      "isLoading" => false,
-                                                                                      "errorMsg" => ""
-                                                                                    ]); ?> data-wp-init="callbacks.init">
+<div id="chat-app" class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
+                                                                                                          "list" => $list,
+                                                                                                          "isLoading" => false,
+                                                                                                          "errorMsg" => ""
+                                                                                                        ]); ?> data-wp-init="callbacks.init">
 
 
-  <div>
+  <div class="col-[1/-1]">
+    <? get_template_part('template-parts/assistant/chat-window'); ?>
+  </div>
+  <div class="max-sm:col-[1/-1]">
     <? $user_id = get_current_user_id();
     if ($user_id) {
       get_template_part('template-parts/assistant/recent-history', null, [
@@ -34,10 +37,7 @@ wp_interactivity_state('AssistantChat', [
     } ?>
   </div>
 
-  <div>
-    <? get_template_part('template-parts/assistant/chat-window'); ?>
-  </div>
-  <div>
+  <div class="max-sm:col-[1/-1]">
     <? get_template_part('template-parts/assistant/quick-questions'); ?>
   </div>
 

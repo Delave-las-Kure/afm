@@ -11,7 +11,7 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-	<header class="entry-header">
+	<header class="entry-header prose-headings mb-7 sm:mb-10">
 		<?php
 		if ( ! is_front_page() ) {
 			the_title( '<h1 class="entry-title">', '</h1>' );

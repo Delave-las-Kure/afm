@@ -14,11 +14,9 @@
 get_header();
 ?>
 
-	<section id="primary">
-		<main id="main">
-
+	<section id="primary" class="px-content py-10 sm:py-20 grow flex flex-col">
+		<main id="main" class="max-w-4xl mx-auto w-full">
 			<?php
-
 			/* Start the Loop */
 			while ( have_posts() ) :
 				the_post();

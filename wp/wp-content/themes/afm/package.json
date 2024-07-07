@@ -4,6 +4,7 @@
 		"@_tw/themejson": "^0.2.0",
 		"@_tw/typography": "^0.5.12",
 		"@angular-eslint/template-parser": "^17.3.0",
+		"@csstools/postcss-sass": "^5.1.1",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.7",
@@ -19,7 +20,7 @@
 		"eslint-plugin-php-markup": "^6.0.0",
 		"eslint-plugin-tailwindcss": "^3.15.1",
 		"npm-run-all": "^4.1.5",
-		"postcss": "^8.4.38",
+		"postcss": "^8.4.39",
 		"postcss-import-ext-glob": "^2.1.1",
 		"prettier": "^3.2.5",
 		"prettier-plugin-tailwindcss": "^0.5.13",
@@ -59,6 +60,7 @@
 		"@wordpress/interactivity": "^6.1.0",
 		"https-proxy-agent": "^7.0.5",
 		"lodash": "^4.17.21",
-		"openai": "^4.52.1"
+		"openai": "^4.52.1",
+		"postcss-scss": "^4.0.9"
 	}
 }

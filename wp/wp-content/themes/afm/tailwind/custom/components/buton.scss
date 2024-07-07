@@ -1,0 +1,233 @@
+.afm-button {
+  @apply border border-solid inline-flex justify-center items-center transition-all rounded-sm;
+  @apply outline-4 outline-transparent font-semibold gap-x-2;
+  border-color: var(--afm-button--border--color);
+  background-color: var(--afm-button--background--color);
+
+  &#{&} {
+    @apply no-underline;
+    text-decoration: none;
+    color: var(--afm-button--color);
+    &.alignwide {
+      @apply w-full;
+    }
+  }
+
+  &:hover {
+    background-color: var(--afm-button--background--color--hover);
+    border-color: var(--afm-button--border--color--hover);
+    color: var(--afm-button--color--hover);
+  }
+
+  &:focus {
+    outline-color: var(--afm-button--outline--color--focus);
+  }
+
+  &:disabled {
+    background-color: var(--afm-button--background--color--disabled);
+    border-color: var(--afm-button--border--color--disabled);
+    color: var(--afm-button--color--disabled);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+
+  &--display {
+    &_block {
+      &#{&} {
+        @apply flex;
+        &.alignleft,
+        &.alignright,
+        &.aligncenter {
+          @apply float-none w-[max-content] max-w-full;
+        }
+        &.alignleft {
+          @apply mr-auto;
+        }
+        &.alignright {
+          @apply ml-auto;
+        }
+        &.aligncenter {
+          @apply mx-auto;
+        }
+      }
+     
+    }
+  }
+
+  &__loading {
+    @apply hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[60%] opacity-75 aspect-square;
+    color: var(--afm-button--color);
+    svg {
+      @apply w-full h-full;
+    }
+    @extend %loading;
+  }
+
+  &__postfix,
+  &__prefix {
+    @apply flex items-center;
+
+    & > :where([class^='icon-'], [class*=' icon-']) {
+      @apply text-body-xl font-normal;
+      @extend %icon;
+    }
+  }
+
+  &__postfix {
+    @extend %postfix;
+  }
+
+  &__content {
+    @extend %content;
+  }
+
+  &__prefix {
+    @extend %prefix;
+  }
+
+  $noIcon: & + '--display_icon';
+
+  &--display_icon {
+    line-height: 1em;
+  }
+
+  &--size_sm {
+    &:where(:not(#{$noIcon})) {
+      @apply text-body-sm py-2 px-3.5;
+    }
+    &:where(#{$noIcon}) {
+      @apply p-2;
+    }
+  }
+  &--size_md {
+    &:where(:not(#{$noIcon})) {
+      @apply text-body-sm py-2.5 px-4;
+    }
+    &:where(#{$noIcon}) {
+      @apply p-2.5;
+    }
+  }
+  &--size_lg {
+    &:where(:not(#{$noIcon})) {
+      @apply text-body-md py-2.5 px-5;
+    }
+    &:where(#{$noIcon}) {
+      @apply p-3;
+    }
+  }
+  &--size_xl {
+    &:where(:not(#{$noIcon})) {
+      @apply text-body-md py-3 px-5;
+      padding: 12px 20px;
+    }
+    &:where(#{$noIcon}) {
+      @apply p-3.5;
+    }
+    :where(%icon) {
+      @apply text-body-xl;
+    }
+  }
+  &--size_2xl {
+    &:where(:not(#{$noIcon})) {
+      @apply text-body-lg py-4 px-7 gap-x-4;
+    }
+    &:where(#{$noIcon}) {
+      @apply p-4;
+    }
+    :where(%icon) {
+      @apply text-display-xs;
+    }
+  }
+
+  &--pending {
+    @apply relative;
+    %loading {
+      @apply inline-flex;
+    }
+    %content,
+    %postfix,
+    %prefix {
+      @apply invisible;
+    }
+  }
+
+  @each $variant in 'contained', 'contained-light', 'text', 'inline' {
+    @each $colorName in $colorNames {
+      &--variant_#{$variant}:where(#{'&--color_' + $colorName}) {
+        @if $variant == 'contained' {
+          --afm-button--background--color: theme("colors.#{$colorName}.DEFAULT");
+          --afm-button--background--color--hover: theme("colors.#{$colorName}.tint");
+          --afm-button--background--color--disabled: theme("colors.#{$colorName}.low");
+          --afm-button--color: theme("colors.on-#{$colorName}.DEFAULT");
+          --afm-button--color--disabled:  theme("colors.on-#{$colorName}.DEFAULT");
+          --afm-button--outline--color--focus: theme("colors.on-#{$colorName}.lowest");
+        } @else if $variant == 'contained-light' {
+          --afm-button--background--color: theme("colors.#{$colorName}-container.low");
+          --afm-button--background--color--hover: theme("colors.#{$colorName}-container.DEFAULT");
+          --afm-button--background--color--disabled: theme("colors.#{$colorName}-container.lowest");
+          --afm-button--color: theme("colors.on-#{$colorName}-container.DEFAULT");
+          --afm-button--color--disabled: theme("colors.on-#{$colorName}.lowest");
+          --afm-button--outline--color--focus: theme("colors.#{$colorName}.lowest");
+        } @else if $variant == 'text' {
+          --afm-button--background--color--hover: theme("colors.#{$colorName}-container.low");
+          --afm-button--color: theme("colors.on-#{$colorName}-container.DEFAULT");
+          --afm-button--outline--color--focus:  theme("colors.#{$colorName}-outline.lowest");
+        } @else if $variant == 'inline' {
+          --afm-button--color: theme("colors.#{$colorName}.DEFAULT");
+          --afm-button--color--hover: theme("colors.#{$colorName}.high");
+          --afm-button--outline--color--focus: theme("colors.#{$colorName}-outline.lowest");
+        }
+      }
+    }
+  }
+
+  &--variant {
+    &_contained,
+    &_contained-light {
+      --afm-button--border--color: var(--afm-button--background--color);
+      --afm-button--border--color--hover: var(--afm-button--background--color--hover);
+      --afm-button--border--color--disabled: var(--afm-button--background--color--disabled);
+      --afm-button--color--hover: var(--afm-button--color);
+    }
+
+    &_outlined {
+      --afm-button--background--color: theme("colors.surface.DEFAULT");
+      --afm-button--background--color--hover: theme("colors.surface.high");
+      --afm-button--background--color--disabled: theme("colors.surface.DEFAULT");
+
+      --afm-button--border--color:  theme("colors.surface-outline.low");
+      --afm-button--border--color--hover: var(--afm-button--border--color);
+      --afm-button--border--color--disabled: theme("colors.surface-outline.lowest");
+
+      --afm-button--color: theme("colors.on-surface.DEFAULT");
+      --afm-button--color--hover: theme("colors.on-surface.high");
+      --afm-button--color--disabled: theme("colors.on-surface.min");
+
+      --afm-button--outline--color--focus: theme("colors.on-surface.lowest");
+    }
+
+    &_text {
+      --afm-button--background--color: transparent;
+      --afm-button--background--color--disabled: transparent;
+
+      --afm-button--border--color: transparent;
+      --afm-button--border--color--hover: var(--afm-button--background--color--hover);
+      --afm-button--border--color--disabled: transparent;
+
+      --afm-button--color--hover: var(--afm-button--color);
+      --afm-button--color--disabled: var(--wp--preset--color--#{$colorGray}-300);
+    }
+
+    &_inline {
+      --afm-button--background--color: transparent;
+      --afm-button--background--color--hover: transparent;
+      --afm-button--background--color--disabled: transparent;
+
+      --afm-button--border--color: transparent;
+      --afm-button--border--color--hover: transparent;
+      --afm-button--border--color--disabled: transparent;
+
+      --afm-button--color--disabled: theme("colors.on-surface.min");
+      padding: 0;
+    }
+  }
+}

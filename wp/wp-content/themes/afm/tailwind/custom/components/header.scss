@@ -1,0 +1,8 @@
+.header {
+  &__menu {
+    ul {
+      @apply flex gap-x-8 font-semibold text-on-surface-low text-body-md;
+    }
+
+  }
+}

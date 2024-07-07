@@ -227,32 +227,24 @@ require get_template_directory() . '/inc/cron/cron.php';
  */
 require get_template_directory() . '/inc/rest/rest.php';
 
+/**
+ * Actions
+ */
+require get_template_directory() . '/inc/actions/actions.php';
 
-add_action('um_before_delete_member_account', 'custom_before_delete_account');
 
-function custom_before_delete_account($user_id)
+
+
+global $LWP_PRO;
+class LWP_PRO
 {
-	if (isset($_POST['um_action']) && $_POST['um_action'] == 'delete') {
-		// Отключаем проверку пароля
-		remove_filter('um_before_update_profile', 'um_action_profile_delete', 10);
+	function lwp_style()
+	{
+	}
+	function lwp_logo()
+	{
+		return 0;
 	}
 }
 
-add_action('init', 'custom_disable_password_delete');
-
-function custom_disable_password_delete()
-{
-	if (
-		isset($_POST['_um_account_tab']) &&
-		$_POST['_um_account_tab'] === 'delete' &&
-		isset($_POST['_um_account']) &&
-		isset($_POST['um_account_nonce_delete']) &&
-		wp_verify_nonce($_POST['um_account_nonce_delete'], 'um_update_account_delete') &&
-		!current_user_can('manage_options')
-	) {
-		UM()->user()->delete(get_current_user_id());
-		wp_logout();
-		wp_redirect(home_url());
-		exit;
-	}
-}
+$LWP_PRO = new LWP_PRO;

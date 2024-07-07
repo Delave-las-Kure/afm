@@ -3,7 +3,7 @@
 /vendor
 
 # Ignore generated JavaScript files:
-*.min.js
+# *.min.js
 
 # Ignore generated CSS files:
 # style.css

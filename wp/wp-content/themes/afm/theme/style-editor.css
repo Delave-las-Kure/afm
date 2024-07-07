@@ -1680,26 +1680,6 @@ body {
   display: grid;
 }
 
-.h-80{
-  height: 20rem;
-}
-
-.h-96{
-  height: 24rem;
-}
-
-.h-\[70dvh\]{
-  height: 70dvh;
-}
-
-.h-\[65dvh\]{
-  height: 65dvh;
-}
-
-.h-\[60dvh\]{
-  height: 60dvh;
-}
-
 .h-\[55dvh\]{
   height: 55dvh;
 }

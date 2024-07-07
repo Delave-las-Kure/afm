@@ -29,7 +29,7 @@ function assistant_create_thread(WP_REST_Request $request)
     $response = AiService::create_thread();
 
     $thread_post_id = AssistantThreadService::create($response->id, $body->message);
-    
+
     return new WP_REST_Response([...$response->toArray(), 'id' => $thread_post_id]);
   } catch (\Throwable $th) {
     return new WP_REST_Response(
@@ -71,9 +71,12 @@ function assistant_create_run(WP_REST_Request $request)
 
   if (!ThreadLimitService::can_add_message())
     ThreadLimitService::lock_thread();
-  // Устанавливаем хедеры, тело запроса и параметры для потокового подключения
 
-  // Выводим headers для клиентского сервиса, чтобы понимать, что происходит стриминг
+  ob_implicit_flush(true);
+  while (ob_get_level() > 0) {
+    ob_end_flush();
+  }
+
   try {
     $stream = AiService::create_run($thread_id, $request_body);
 

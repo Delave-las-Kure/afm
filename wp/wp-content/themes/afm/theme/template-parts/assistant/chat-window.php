@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md rounded p-4 mb-4 border border-surface-outline-lowest">
-    <div class="h-64 overflow-y-auto mb-4 bg-surface-high p-2 rounded">
+    <div class=" h-[55dvh] sm:h-96 min-h-80 overflow-y-auto mb-4 bg-surface-high p-2 rounded">
         <div class="overflow-auto max-h-full flex flex-col-reverse">
             <div>
                 <template data-wp-each--message="context.list" data-wp-each-key="context.message.id">

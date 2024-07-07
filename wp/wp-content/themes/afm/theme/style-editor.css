@@ -1680,8 +1680,28 @@ body {
   display: grid;
 }
 
-.h-64{
-  height: 16rem;
+.h-80{
+  height: 20rem;
+}
+
+.h-96{
+  height: 24rem;
+}
+
+.h-\[70dvh\]{
+  height: 70dvh;
+}
+
+.h-\[65dvh\]{
+  height: 65dvh;
+}
+
+.h-\[60dvh\]{
+  height: 60dvh;
+}
+
+.h-\[55dvh\]{
+  height: 55dvh;
 }
 
 .max-h-64{
@@ -1690,6 +1710,10 @@ body {
 
 .max-h-full{
   max-height: 100%;
+}
+
+.min-h-80{
+  min-height: 20rem;
 }
 
 .w-full{
@@ -1955,6 +1979,10 @@ body {
 
   .sm\:h-80{
     height: 20rem;
+  }
+
+  .sm\:h-96{
+    height: 24rem;
   }
 
   .sm\:gap-x-10{

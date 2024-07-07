@@ -30,6 +30,7 @@ export class Assistant {
 			apiKey: 'not_see',
 			defaultHeaders: {
 				'X-WP-Nonce': REST_NONCE,
+				'OpenAI-Beta': 'assistants=v2',
 			},
 		});
 	}

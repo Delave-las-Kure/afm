@@ -67,7 +67,6 @@ export const AssistantChatFormStore = store('AssistantChatForm', {
 		},
 
 		submit(e: Event) {
-			console.log('red');
 			e.preventDefault();
 			const ctx = getContext<AssistantChatFormContextProps>();
 			const msg = ctx.currentUserMessage;

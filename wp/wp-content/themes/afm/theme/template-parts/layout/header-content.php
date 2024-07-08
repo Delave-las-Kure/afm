@@ -21,7 +21,7 @@
 
 				if (has_custom_logo()) { ?>
 					<a href="<?= esc_url(home_url('/')) ?>" class="" title="<?= $site_name ?>">
-						<?= wp_get_attachment_image($custom_logo_id, [0, 48], false, array("alt" => $site_name, 'class' => '')) ?>
+						<?= wp_get_attachment_image($custom_logo_id, 'medium', false, array("alt" => $site_name, 'class' => 'h-7 w-auto')) ?>
 					</a>
 				<? } else { ?>
 					<a href="<?= esc_url(home_url('/')) ?>" title="<?= esc_attr(get_bloginfo('name')) ?>" class="">

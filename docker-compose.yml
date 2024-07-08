@@ -64,18 +64,18 @@ services:
       - db_host
       - db_root_pass
 
-  https-portal:
-    image: steveltn/https-portal:1.23
-    ports:
-      - 80:80
-      - 443:443
-    links:
-      - wp
-    networks:
-      - net
-    restart: always
-    volumes:
-      - ./https-portal-data:/var/lib/https-portal
+  # https-portal:
+  #   image: steveltn/https-portal:1.23
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   links:
+  #     - wp
+  #   networks:
+  #     - net
+  #   restart: always
+  #   volumes:
+  #     - ./https-portal-data:/var/lib/https-portal
 
 volumes:
   db:

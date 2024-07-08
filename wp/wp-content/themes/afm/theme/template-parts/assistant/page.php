@@ -13,6 +13,7 @@ if ($assistant_thread_id) {
 }
 
 wp_interactivity_state('AssistantChat', [
+  "userId" => get_current_user_id(),
   "apiUrl" => get_field('api_url', 'option'),
   "assistantId" => get_field('assistant_id', 'option'),
   "messageLimit" => ThreadLimitService::get_assistant_message_limit(),

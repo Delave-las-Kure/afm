@@ -1,7 +1,8 @@
 import { store, getElement, getContext } from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
 import type OpenAI from 'openai';
-import { addAutoResizeTextarea } from '../libs/autoresize-textarea';
+import track from '../libs/track';
+import { truncate } from 'lodash';
 
 export interface AssistantChatContextProps {
 	isLoading: boolean;
@@ -12,6 +13,7 @@ export interface AssistantChatContextProps {
 }
 
 export interface AssistantChatStateProps {
+	userId: number;
 	apiUrl: string;
 	assistantId: string;
 	messageLimit: number;
@@ -56,7 +58,31 @@ export const AssistantChatStore = store('AssistantChat', {
 			try {
 				ctx.isLoading = true;
 
+				const firstRun = !ctx.assistant.threadId;
+
 				const message = await ctx.assistant.addMessage(messageText);
+
+				if (firstRun) {
+					track({
+						event: 'create-thread',
+						options: {
+							userId: state.userId,
+							threadId: ctx.assistant.threadId,
+						},
+					});
+				}
+
+				track({
+					event: 'ask-question',
+					options: {
+						userId: state.userId,
+						message: truncate(messageText, {
+							length: 24,
+							separator: ' ',
+						}),
+						threadId: ctx.assistant.threadId,
+					},
+				});
 
 				ctx.list.push(message);
 

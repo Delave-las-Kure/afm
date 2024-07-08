@@ -1680,24 +1680,12 @@ body {
   display: grid;
 }
 
-.h-12{
-  height: 3rem;
+.h-7{
+  height: 1.75rem;
 }
 
 .h-\[55dvh\]{
   height: 55dvh;
-}
-
-.h-10{
-  height: 2.5rem;
-}
-
-.h-8{
-  height: 2rem;
-}
-
-.h-7{
-  height: 1.75rem;
 }
 
 .max-h-64{
@@ -1832,29 +1820,13 @@ body {
   background-color: var(--afm-color-gray-highest);
 }
 
-.bg-surface-high{
-  background-color: var(--afm-color-surface-high);
+.bg-surface-highest{
+  background-color: var(--afm-color-surface-highest);
 }
 
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-warning-high{
-  background-color: var(--afm-color-warning-high);
-}
-
-.bg-warning-lowest{
-  background-color: var(--afm-color-warning-lowest);
-}
-
-.bg-surface-highest{
-  background-color: var(--afm-color-surface-highest);
-}
-
-.bg-surface-max{
-  background-color: var(--afm-color-surface-max);
 }
 
 .p-2{
@@ -1995,14 +1967,6 @@ body {
 
   .sm\:h-80{
     height: 20rem;
-  }
-
-  .sm\:h-96{
-    height: 24rem;
-  }
-
-  .sm\:h-\[50dvh\]{
-    height: 50dvh;
   }
 
   .sm\:h-\[45dvh\]{

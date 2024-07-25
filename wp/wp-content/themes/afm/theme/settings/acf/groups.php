@@ -105,6 +105,26 @@ add_action('acf/include_fields', function () {
         'selected' => 0,
       ),
       array(
+        'key' => 'field_66a2b5d9b9108',
+        'label' => 'Disable Limits',
+        'name' => 'question_disable_limits',
+        'aria-label' => '',
+        'type' => 'true_false',
+        'instructions' => '',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'message' => '',
+        'default_value' => 0,
+        'ui' => 0,
+        'ui_on_text' => '',
+        'ui_off_text' => '',
+      ),
+      array(
         'key' => 'field_6682a5d0985ee',
         'label' => 'Question limit for guests',
         'name' => 'question_limit_for_guests',
@@ -112,7 +132,15 @@ add_action('acf/include_fields', function () {
         'type' => 'number',
         'instructions' => '',
         'required' => 0,
-        'conditional_logic' => 0,
+        'conditional_logic' => array(
+          array(
+            array(
+              'field' => 'field_66a2b5d9b9108',
+              'operator' => '!=',
+              'value' => '1',
+            ),
+          ),
+        ),
         'wrapper' => array(
           'width' => '',
           'class' => '',
@@ -134,7 +162,15 @@ add_action('acf/include_fields', function () {
         'type' => 'number',
         'instructions' => '',
         'required' => 0,
-        'conditional_logic' => 0,
+        'conditional_logic' => array(
+          array(
+            array(
+              'field' => 'field_66a2b5d9b9108',
+              'operator' => '!=',
+              'value' => '1',
+            ),
+          ),
+        ),
         'wrapper' => array(
           'width' => '',
           'class' => '',

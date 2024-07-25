@@ -20,7 +20,9 @@
         </textarea>
             <div class="flex justify-between mt-2 items-center">
                 <div class="text-body-sm">
-                    <span data-wp-text="state.messageCount"></span> / <span data-wp-text="state.messageLimit"></span>
+                    <? if (!ThreadLimitService::is_limit_disabled()) { ?>
+                        <span data-wp-text="state.messageCount"></span> / <span data-wp-text="state.messageLimit"></span>
+                    <? } ?>
                 </div>
                 <? get_template_part('template-parts/atoms/button', null, [
                     'content' => __("Send", "afm"),

@@ -4,6 +4,7 @@ import type OpenAI from 'openai';
 import track from '../libs/track';
 import { truncate } from 'lodash';
 
+declare const wp: any;
 export interface AssistantChatContextProps {
 	isLoading: boolean;
 	assistant: Assistant;
@@ -15,6 +16,7 @@ export interface AssistantChatContextProps {
 export interface AssistantChatStateProps {
 	userId: number;
 	apiUrl: string;
+	isLimitDisabled: boolean;
 	assistantId: string;
 	messageLimit: number;
 	messageCount: number;
@@ -26,7 +28,12 @@ export const AssistantChatStore = store('AssistantChat', {
 	state: {
 		get isLocked() {
 			const { isLoading } = getContext<AssistantChatContextProps>();
-			return state.messageCount >= state.messageLimit || isLoading;
+
+			return (
+				(state.isLimitDisabled
+					? false
+					: state.messageCount >= state.messageLimit) || isLoading
+			);
 		},
 		get hasError() {
 			return !!getContext<AssistantChatContextProps>().errorMsg;
@@ -99,6 +106,11 @@ export const AssistantChatStore = store('AssistantChat', {
 				}
 			} catch (error) {
 				console.error(error);
+				if ('status' in error && error.status == 403)
+					error.message = wp.i18n.__(
+						'Message quota exceeded.',
+						'afm'
+					);
 				ctx.errorMsg = error.message;
 			}
 

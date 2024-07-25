@@ -18,6 +18,7 @@ wp_interactivity_state('AssistantChat', [
   "assistantId" => get_field('assistant_id', 'option'),
   "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
   "messageCount" => ThreadLimitService::get_message_count(),
+  "isLimitDisabled" => !!ThreadLimitService::is_limit_disabled(),
 ]); ?>
 <div id="chat-app" class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
                                                                                                           "list" => $list,

@@ -2,6 +2,11 @@
 
 class ThreadLimitService
 {
+    static function is_limit_disabled()
+    {
+        return get_field('question_disable_limits', 'option');
+    }
+
     static function get_assistant_message_limit(Int|String $user_id = null)
     {
         $user_id = !is_null($user_id) ? $user_id : get_current_user_id();
@@ -62,6 +67,8 @@ class ThreadLimitService
 
     static function can_add_message(Int|String $user_id = null)
     {
+        if (ThreadLimitService::is_limit_disabled()) return true;
+
         $message_count = ThreadLimitService::get_message_count($user_id);
         $max_messages = ThreadLimitService::get_assistant_message_limit($user_id);
 
@@ -72,7 +79,8 @@ class ThreadLimitService
         return true;
     }
 
-    static function lock_thread(Int|String $user_id = null) {
+    static function lock_thread(Int|String $user_id = null)
+    {
         $user_id = !is_null($user_id) ? $user_id : get_current_user_id();
 
         if ($user_id) {
@@ -90,7 +98,8 @@ class ThreadLimitService
         }
     }
 
-    static function release_thread(Int|String $user_id = null) {
+    static function release_thread(Int|String $user_id = null)
+    {
         $user_id = !is_null($user_id) ? $user_id : get_current_user_id();
 
         if ($user_id) {

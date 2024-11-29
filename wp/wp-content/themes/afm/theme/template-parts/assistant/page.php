@@ -20,13 +20,13 @@ wp_interactivity_state('AssistantChat', [
   "messageCount" => ThreadLimitService::get_message_count(),
   "isLimitDisabled" => !!ThreadLimitService::is_limit_disabled(),
 ]); ?>
-<div id="chat-app" class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
+<div id="chat-app" data-iframe-size class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
                                                                                                           "list" => $list,
                                                                                                           "isLoading" => false,
                                                                                                           "errorMsg" => ""
                                                                                                         ]); ?> data-wp-init="callbacks.init">
 
-
+<span data-wp-text="state.apiUrl">world</span>
   <div class="col-[1/-1]">
     <? get_template_part('template-parts/assistant/chat-window'); ?>
   </div>

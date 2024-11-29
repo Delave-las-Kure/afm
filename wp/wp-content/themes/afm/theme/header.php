@@ -20,7 +20,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<meta name="rest-nonce" content="<?= wp_create_nonce("wp_rest") ?>">
-	
+
 	<?php wp_head(); ?>
 </head>
 
@@ -30,7 +30,8 @@
 
 	<div id="page" class="flex flex-col grow">
 		<a href="#content" class="sr-only"><?php esc_html_e('Skip to content', 'afm'); ?></a>
-
-		<?php get_template_part('template-parts/layout/header', 'content'); ?>
+		<? if (defined('AFM_DISABLE_HEADER') && !AFM_DISABLE_HEADER) {
+			get_template_part('template-parts/layout/header', 'content');
+		} ?>
 
 		<div id="content" class="grow flex flex-col">

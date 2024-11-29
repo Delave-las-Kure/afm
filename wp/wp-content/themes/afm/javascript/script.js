@@ -8,6 +8,7 @@
  * For esbuild documentation, please see:
  * https://esbuild.github.io/
  */
+import './libs/autoresize-iframe-child';
 import './components/quick-questations';
 import './components/assistant-chat';
 import './components/assistant-chat-message';

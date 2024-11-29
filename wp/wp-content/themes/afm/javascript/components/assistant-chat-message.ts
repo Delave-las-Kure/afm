@@ -40,9 +40,7 @@ const AssistantChatMessageStore = store('AssistantChatMessage', {
 	},
 	actions: {
 		async delete() {
-			await store<typeof AssistantChatStore>(
-				'AssistantChat'
-			).actions.deleteMessage(state.messageId);
+			await AssistantChatStore.actions.deleteMessage(state.messageId);
 		},
 	},
 });

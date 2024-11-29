@@ -1,5 +1,5 @@
 import { store, getElement, getContext } from '@wordpress/interactivity';
-import type { AssistantChatStore } from './assistant-chat';
+import { AssistantChatStore } from './assistant-chat';
 
 interface AssistantQuickQuestionsContextProps {
 	item: {
@@ -13,7 +13,7 @@ store('AssistantQuickQuestions', {
 		start() {
 			const { item } = getContext<AssistantQuickQuestionsContextProps>();
 
-			const chatStore = store<typeof AssistantChatStore>('AssistantChat');
+			const chatStore = AssistantChatStore;
 			chatStore.actions.reset();
 			chatStore.actions.runChat(item.question || item.title);
 		},

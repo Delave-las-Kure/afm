@@ -59,7 +59,7 @@
 	"dependencies": {
 		"@iframe-resizer/child": "^5.3.2",
 		"@iframe-resizer/parent": "^5.3.2",
-		"@wordpress/interactivity": "^6.1.0",
+		"@wordpress/interactivity": "^6.13.0",
 		"https-proxy-agent": "^7.0.5",
 		"lodash": "^4.17.21",
 		"openai": "4.52.1",

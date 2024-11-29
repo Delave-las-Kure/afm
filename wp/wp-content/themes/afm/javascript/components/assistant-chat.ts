@@ -1,4 +1,9 @@
-import { store, getElement, getContext } from '@wordpress/interactivity';
+import {
+	store,
+	getElement,
+	getContext,
+	getServerState,
+} from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
 import type OpenAI from 'openai';
 import track from '../libs/track';
@@ -42,6 +47,7 @@ export const AssistantChatStore = store('AssistantChat', {
 	callbacks: {
 		init() {
 			const ctx = getContext<AssistantChatContextProps>();
+
 			ctx.assistant = new Assistant(state.apiUrl, state.assistantId);
 		},
 	},

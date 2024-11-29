@@ -1,5 +1,15 @@
-<? ob_start(); ?>
 <?
+wp_interactivity_state('AssistantChat', [
+  "userId" => get_current_user_id(),
+  "apiUrl" => get_field('api_url', 'option'),
+  "assistantId" => get_field('assistant_id', 'option'),
+  "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
+  "messageCount" => ThreadLimitService::get_message_count(),
+  "isLimitDisabled" => !!ThreadLimitService::is_limit_disabled(),
+]); 
+
+ob_start();
+
 $assistant_thread_id = $args['assistant_thread_id'] ?? null;
 $list = [];
 
@@ -12,21 +22,12 @@ if ($assistant_thread_id) {
   }
 }
 
-wp_interactivity_state('AssistantChat', [
-  "userId" => get_current_user_id(),
-  "apiUrl" => get_field('api_url', 'option'),
-  "assistantId" => get_field('assistant_id', 'option'),
-  "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
-  "messageCount" => ThreadLimitService::get_message_count(),
-  "isLimitDisabled" => !!ThreadLimitService::is_limit_disabled(),
-]); ?>
+?>
 <div id="chat-app" data-iframe-size class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
                                                                                                           "list" => $list,
                                                                                                           "isLoading" => false,
                                                                                                           "errorMsg" => ""
                                                                                                         ]); ?> data-wp-init="callbacks.init">
-
-<span data-wp-text="state.apiUrl">world</span>
   <div class="col-[1/-1]">
     <? get_template_part('template-parts/assistant/chat-window'); ?>
   </div>

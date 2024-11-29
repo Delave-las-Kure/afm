@@ -2,7 +2,7 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 import { Assistant } from '../shared/assistant';
 import type OpenAI from 'openai';
 import { addAutoResizeTextarea } from '../libs/autoresize-textarea';
-import type {
+import {
 	AssistantChatContextProps,
 	AssistantChatStore,
 } from './assistant-chat';
@@ -23,23 +23,19 @@ export interface AssistantChatFormStateProps {
 export const AssistantChatFormStore = store('AssistantChatForm', {
 	state: {
 		get messageLimit() {
-			const assistantChatStore =
-				store<typeof AssistantChatStore>('AssistantChat');
+			const assistantChatStore = AssistantChatStore;
 			return assistantChatStore.state.messageLimit;
 		},
 		get messageCount() {
-			const assistantChatStore =
-				store<typeof AssistantChatStore>('AssistantChat');
+			const assistantChatStore = AssistantChatStore;
 			return assistantChatStore.state.messageCount;
 		},
 		get isLocked() {
-			const assistantChatStore =
-				store<typeof AssistantChatStore>('AssistantChat');
+			const assistantChatStore = AssistantChatStore;
 			return assistantChatStore.state.isLocked;
 		},
 		get hasError() {
-			const assistantChatStore =
-				store<typeof AssistantChatStore>('AssistantChat');
+			const assistantChatStore = AssistantChatStore;
 			return assistantChatStore.state.hasError;
 		},
 		get errorMsg() {
@@ -71,10 +67,7 @@ export const AssistantChatFormStore = store('AssistantChatForm', {
 			const ctx = getContext<AssistantChatFormContextProps>();
 			const msg = ctx.currentUserMessage;
 			ctx.currentUserMessage = '';
-			if (msg)
-				store<typeof AssistantChatStore>(
-					'AssistantChat'
-				).actions.runChat(msg);
+			if (msg) AssistantChatStore.actions.runChat(msg);
 		},
 	},
 });

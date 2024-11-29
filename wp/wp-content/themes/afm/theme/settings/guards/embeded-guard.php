@@ -12,7 +12,7 @@ function allow_embedding_only_for_whitelisted_domains_csp() {
       foreach ($domain_white_list as $domain_entry) {
         $domain = $domain_entry['domain'];
         // Поддержка подстановочных знаков для поддоменов
-        $allowed_domains[] = sprintf('%s', $domain);
+        $allowed_domains[] = sprintf('https://%s', $domain);
       }
     }
 

@@ -1,4 +1,4 @@
-FROM wordpress:6.5.5-php8.1-apache
+FROM wordpress:6.7.1-php8.1-apache
 # Install packages under Debian
 RUN apt-get update && \
     apt-get -y install git
@@ -32,10 +32,10 @@ COPY ./apisix/https-portal-data/assistant.local/local/signed.crt /usr/local/shar
 # Update CA certificates
 RUN update-ca-certificates
 
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-    chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp &&\
-    wp package install wp-cli/profile-command --allow-root
+# RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+#     chmod +x wp-cli.phar && \
+#     mv wp-cli.phar /usr/local/bin/wp &&\
+#     wp package install wp-cli/profile-command --allow-root
 
 RUN mkdir /tmp/xdebug
 RUN chmod 777 /tmp/xdebug

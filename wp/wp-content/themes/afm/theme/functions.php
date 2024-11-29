@@ -150,7 +150,7 @@ add_action('widgets_init', 'afm_widgets_init');
 function afm_scripts()
 {
 	wp_enqueue_style('afm-style', get_stylesheet_uri(), array(), AFM_VERSION);
-	wp_enqueue_script('afm-script', get_template_directory_uri() . '/js/script.min.js', array(), AFM_VERSION, true);
+	wp_enqueue_script_module('afm-script', get_template_directory_uri() . '/js/script.min.js', array('@wordpress/interactivity'), AFM_VERSION);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');

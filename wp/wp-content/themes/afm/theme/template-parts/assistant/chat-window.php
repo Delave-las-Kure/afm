@@ -1,4 +1,4 @@
-<div class="bg-white shadow-md rounded p-4 mb-4 border border-surface-outline-lowest">
+<div class="bg-white shadow-md rounded p-4 border border-surface-outline-lowest">
     <div class=" h-[55dvh] sm:h-[45dvh] min-h-80 overflow-y-auto mb-4 bg-surface-highest p-2 rounded">
         <div class="overflow-auto max-h-full flex flex-col-reverse">
             <div>

@@ -2,7 +2,7 @@
   <h2 class="font-bold mb-2 text-on-surface text-body-lg"><?= __("Quick Questions", "afm") ?></h2>
   <div class="flex flex-col max-h-64 sm:h-80 overflow-y-auto">
     <template data-wp-each="context.list" data-wp-each-key="context.item.title">
-      <button class="transition-all border border-surface-outline-low hover:bg-surface-max text-on-surface-high p-2 my-1 rounded text-body-sm w-full text-left" data-wp-on-async--click="actions.start" data-wp-text="context.item.title"></button>
+      <button class="qq-btn transition-all border border-surface-outline-low hover:bg-surface-max text-on-surface-high p-2 my-1 rounded text-body-sm w-full text-left" data-wp-on-async--click="actions.start" data-wp-text="context.item.title"></button>
     </template>
   </div>
 </div>

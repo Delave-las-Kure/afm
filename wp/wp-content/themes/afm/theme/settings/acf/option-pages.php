@@ -36,13 +36,14 @@ function add_iframe_to_acf_options_page()
   $domain = $urlparts['host'];
 ?>
   <div style="margin: 20px 0;">
-    <h2>Embed Preview</h2>
+    <h2>Embed Codes</h2>
     <textarea readonly style="width: 100%; height: 120px;" onclick="this.select();">
 <iframe id="afm-embeded"
   src="https://<?= $domain ?>/embeded/"
   style="width: 100%; height: 500px; border: none;">
 </iframe>
     </textarea>
+    <p>Insert in the end of your site:</p>
     <textarea readonly style="width: 100%; height: 120px;" onclick="this.select();">
 <script src="https://<?= $domain ?>/wp-content/themes/afm/theme/js/embed.min.js?ver=<?= AFM_VERSION ?>" ></script>
     </textarea>

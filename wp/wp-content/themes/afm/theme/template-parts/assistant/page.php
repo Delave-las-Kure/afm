@@ -6,7 +6,7 @@ wp_interactivity_state('AssistantChat', [
   "messageLimit" => ThreadLimitService::get_assistant_message_limit(),
   "messageCount" => ThreadLimitService::get_message_count(),
   "isLimitDisabled" => !!ThreadLimitService::is_limit_disabled(),
-]); 
+]);
 
 ob_start();
 
@@ -24,25 +24,29 @@ if ($assistant_thread_id) {
 
 ?>
 <div id="chat-app" data-iframe-size class="grid gap-x-6 gap-y-6 grid-cols-[1fr_1fr]" data-wp-interactive="AssistantChat" <?= wp_interactivity_data_wp_context([
-                                                                                                          "list" => $list,
-                                                                                                          "isLoading" => false,
-                                                                                                          "errorMsg" => ""
-                                                                                                        ]); ?> data-wp-init="callbacks.init">
+                                                                                                                            "list" => $list,
+                                                                                                                            "isLoading" => false,
+                                                                                                                            "errorMsg" => ""
+                                                                                                                          ]); ?> data-wp-init="callbacks.init">
+
   <div class="col-[1/-1]">
     <? get_template_part('template-parts/assistant/chat-window'); ?>
   </div>
-  <div class="max-sm:col-[1/-1]">
-    <? $user_id = get_current_user_id();
-    if ($user_id) {
-      get_template_part('template-parts/assistant/recent-history', null, [
-        'user_id' => $user_id
-      ]);
-    } ?>
+  <div class="col-[1/-1] flex gap-x-6 gap-y-6 max-sm:flex-col [&:not(:has(:is(#history-list,.qq-btn)))]:hidden">
+    <div class="[&:not(:has(#history-list))]:hidden flex-1">
+      <? $user_id = get_current_user_id();
+      if ($user_id) {
+        get_template_part('template-parts/assistant/recent-history', null, [
+          'user_id' => $user_id
+        ]);
+      } ?>
+    </div>
+
+    <div class="[&:not(:has(.qq-btn))]:hidden flex-1">
+      <? get_template_part('template-parts/assistant/quick-questions'); ?>
+    </div>
   </div>
 
-  <div class="max-sm:col-[1/-1]">
-    <? get_template_part('template-parts/assistant/quick-questions'); ?>
-  </div>
 
 </div>
 

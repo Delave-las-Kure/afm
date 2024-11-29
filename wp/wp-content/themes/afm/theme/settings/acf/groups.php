@@ -446,4 +446,74 @@ add_action('acf/include_fields', function () {
     'description' => '',
     'show_in_rest' => 0,
   ));
+
+  acf_add_local_field_group(array(
+    'key' => 'group_6748329735e30',
+    'title' => 'Embedding Settings',
+    'fields' => array(
+      array(
+        'key' => 'field_674832970c856',
+        'label' => 'Domain White List',
+        'name' => 'domain_white_list',
+        'aria-label' => '',
+        'type' => 'repeater',
+        'instructions' => '',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'layout' => 'table',
+        'pagination' => 0,
+        'min' => 0,
+        'max' => 0,
+        'collapsed' => '',
+        'button_label' => 'Add Row',
+        'rows_per_page' => 20,
+        'sub_fields' => array(
+          array(
+            'key' => 'field_67483748cd13f',
+            'label' => 'Domain',
+            'name' => 'domain',
+            'aria-label' => '',
+            'type' => 'text',
+            'instructions' => 'domain.com, *.domain.com',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'maxlength' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'parent_repeater' => 'field_674832970c856',
+          ),
+        ),
+      ),
+    ),
+    'location' => array(
+      array(
+        array(
+          'param' => 'options_page',
+          'operator' => '==',
+          'value' => 'embedding-settings',
+        ),
+      ),
+    ),
+    'menu_order' => 0,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => true,
+    'description' => '',
+    'show_in_rest' => 0,
+  ));
 });
